@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-canvas font-sans text-ink-900 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-signal-400 ring-offset-2 ring-offset-white;
+  }
+  ::selection {
+    @apply bg-signal-200 text-ink-950;
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl font-semibold whitespace-nowrap
+      transition-[background-color,box-shadow,transform,color,border-color] duration-150
+      active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 select-none;
+  }
+  .btn-sm { @apply h-9 px-3 text-sm; }
+  .btn-md { @apply h-11 px-4 text-sm; }
+  .btn-lg { @apply h-13 px-6 text-base; }
+  .btn-primary { @apply bg-signal-500 text-white shadow-signal hover:bg-signal-600; }
+  .btn-dark { @apply bg-ink-900 text-white hover:bg-ink-800; }
+  .btn-success { @apply bg-volt-400 text-ink-950 hover:bg-volt-300; }
+  .btn-outline { @apply border border-ink-200 bg-white text-ink-800 hover:border-ink-300 hover:bg-ink-50; }
+  .btn-ghost { @apply text-ink-700 hover:bg-ink-100; }
+  .btn-danger { @apply border border-red-200 bg-white text-red-600 hover:bg-red-50; }
+  .btn-glass { @apply border border-white/15 bg-white/5 text-white hover:bg-white/10; }
+
+  /* Surfaces */
+  .card { @apply rounded-2xl border border-ink-100 bg-white shadow-card; }
+  .card-dark { @apply rounded-2xl border border-white/10 bg-ink-900 text-white; }
+
+  /* Forms */
+  .label { @apply mb-1.5 block text-sm font-medium text-ink-700; }
+  .input {
+    @apply block w-full rounded-xl border border-ink-200 bg-white px-3.5 py-2.5 text-[15px] text-ink-900
+      placeholder:text-ink-300 transition-colors
+      focus:border-signal-400 focus:outline-none focus:ring-4 focus:ring-signal-100
+      disabled:bg-ink-50 disabled:text-ink-400;
+  }
+  .input-error { @apply border-red-400 focus:border-red-500 focus:ring-red-100; }
+
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.14em]; }
+
+  /* Subtle dotted map-grid texture for dark surfaces */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+@layer utilities {
+  .h-13 { height: 3.25rem; }
+  .pb-safe { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .scrollbar-thin { scrollbar-width: thin; }
+}
+
+/* Leaflet: keep map panes below app overlays (navbar, toasts, sheets) */
+.leaflet-container {
+  @apply font-sans;
+  z-index: 0;
+}
+.leaflet-control-attribution {
+  font-size: 10px;
+}
+.rq-marker {
+  background: transparent;
+  border: 0;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
